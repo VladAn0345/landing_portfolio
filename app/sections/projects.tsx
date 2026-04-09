@@ -54,6 +54,7 @@ const projectsStyles = {
     overflow: "hidden" as const,
     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    border: "2px dashed purple", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   projectImage: {
@@ -62,22 +63,26 @@ const projectsStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    border: "2px dashed cyan", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   projectContent: {
     padding: "32px",
+    border: "2px dashed magenta", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   projectTitle: {
     color: "#1A2433",
     ...headlineSmall,
     margin: "0 0 16px 0",
+    border: "1px dashed darkred", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   projectDescription: {
     color: "#7F858F",
     ...bodyLarge,
     margin: "0 0 24px 0",
+    border: "1px dashed darkgreen", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   tagsContainer: {
@@ -85,6 +90,7 @@ const projectsStyles = {
     flexWrap: "wrap" as const,
     gap: "8px",
     marginBottom: "24px",
+    border: "1px dashed darkblue", // ОТЛАДОЧНАЯ РАМКА - МОЖНО УБРАТЬ ПОСЛЕ ОТЛАДКИ
   } as React.CSSProperties,
 
   tag: {
@@ -161,10 +167,20 @@ export default function Projects() {
       <div style={projectsStyles.container}>
         {/* ЛЕВАЯ ЧАСТЬ - проекты */}
         <div style={projectsStyles.leftContainer}>
-          <div style={projectsStyles.grid}>
+          <div style={{ ...projectsStyles.grid, border: "1px dashed purple" }}>
             {/* Проект 1 */}
-            <div style={projectsStyles.projectCard}>
-              <div style={projectsStyles.projectImage}>
+            <div
+              style={{
+                ...projectsStyles.projectCard,
+                border: "1px dashed magenta",
+              }}
+            >
+              <div
+                style={{
+                  ...projectsStyles.projectImage,
+                  border: "1px dashed cyan",
+                }}
+              >
                 <div style={{ textAlign: "center" as const }}>
                   <div
                     style={{
@@ -199,25 +215,69 @@ export default function Projects() {
                   </h3>
                 </div>
               </div>
-              <div style={projectsStyles.projectContent}>
-                <h3 style={projectsStyles.projectTitle}>
+              <div
+                style={{
+                  ...projectsStyles.projectContent,
+                  border: "1px dashed lime",
+                }}
+              >
+                <h3
+                  style={{
+                    ...projectsStyles.projectTitle,
+                    border: "1px dashed yellow",
+                  }}
+                >
                   Онлайн-магазин премиум косметики
                 </h3>
-                <p style={projectsStyles.projectDescription}>
+                <p
+                  style={{
+                    ...projectsStyles.projectDescription,
+                    border: "1px dashed pink",
+                  }}
+                >
                   Полный редизайн платформы с фокусом на улучшении
                   пользовательского опыта и увеличении конверсии.
                 </p>
-                <div style={projectsStyles.tagsContainer}>
-                  <span style={projectsStyles.tag}>UI/UX Design</span>
-                  <span style={projectsStyles.tag}>Figma</span>
-                  <span style={projectsStyles.tag}>Prototyping</span>
+                <div
+                  style={{
+                    ...projectsStyles.tagsContainer,
+                    border: "1px dashed brown",
+                  }}
+                >
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    UI/UX Design
+                  </span>
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    Figma
+                  </span>
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    Prototyping
+                  </span>
                 </div>
-                <div style={projectsStyles.projectResult}>+45% конверсии</div>
+                <div
+                  style={{
+                    ...projectsStyles.projectResult,
+                    border: "1px dashed orange",
+                  }}
+                >
+                  +45% конверсии
+                </div>
               </div>
             </div>
 
             {/* Проект 2 */}
-            <div style={projectsStyles.projectCard}>
+            <div
+              style={{
+                ...projectsStyles.projectCard,
+                border: "1px dashed magenta",
+              }}
+            >
               <div
                 style={{
                   ...projectsStyles.projectImage,
@@ -284,7 +344,12 @@ export default function Projects() {
                   backgroundColor: "#F5F0FF",
                 }}
               >
-                <div style={{ textAlign: "center" as const }}>
+                <div
+                  style={{
+                    textAlign: "center" as const,
+                    border: "1px dashed teal",
+                  }}
+                >
                   <div
                     style={{
                       width: "64px",
@@ -295,6 +360,7 @@ export default function Projects() {
                       alignItems: "center",
                       justifyContent: "center",
                       margin: "0 auto 16px",
+                      border: "1px dashed navy",
                     }}
                   >
                     <span
@@ -302,6 +368,7 @@ export default function Projects() {
                         color: "#FFFFFF",
                         fontWeight: "bold",
                         fontSize: "24px",
+                        border: "1px dashed white",
                       }}
                     >
                       H
@@ -312,26 +379,64 @@ export default function Projects() {
                       color: "#1A2433",
                       ...titleLarge,
                       fontWeight: "bold",
+                      border: "1px dashed olive",
                     }}
                   >
                     Healthcare Portal
                   </h3>
                 </div>
               </div>
-              <div style={projectsStyles.projectContent}>
-                <h3 style={projectsStyles.projectTitle}>
+              <div
+                style={{
+                  ...projectsStyles.projectContent,
+                  border: "1px dashed lime",
+                }}
+              >
+                <h3
+                  style={{
+                    ...projectsStyles.projectTitle,
+                    border: "1px dashed yellow",
+                  }}
+                >
                   Корпоративный портал
                 </h3>
-                <p style={projectsStyles.projectDescription}>
+                <p
+                  style={{
+                    ...projectsStyles.projectDescription,
+                    border: "1px dashed pink",
+                  }}
+                >
                   Создание дизайн-системы и UI-кита для кросс-платформенного
                   приложения с трекингом тренировок и питания.
                 </p>
-                <div style={projectsStyles.tagsContainer}>
-                  <span style={projectsStyles.tag}>Web Design</span>
-                  <span style={projectsStyles.tag}>Accessibility</span>
-                  <span style={projectsStyles.tag}>Dashboard</span>
+                <div
+                  style={{
+                    ...projectsStyles.tagsContainer,
+                    border: "1px dashed brown",
+                  }}
+                >
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    Web Design
+                  </span>
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    Accessibility
+                  </span>
+                  <span
+                    style={{ ...projectsStyles.tag, border: "1px dashed gray" }}
+                  >
+                    Dashboard
+                  </span>
                 </div>
-                <div style={projectsStyles.projectResult}>
+                <div
+                  style={{
+                    ...projectsStyles.projectResult,
+                    border: "1px dashed orange",
+                  }}
+                >
                   -30% время навигации
                 </div>
               </div>
@@ -339,31 +444,123 @@ export default function Projects() {
           </div>
 
           {/* Статистика */}
-          <div style={projectsStyles.statsGrid}>
-            <div style={projectsStyles.statCard}>
-              <div style={projectsStyles.statValue}>12+</div>
-              <div style={projectsStyles.statLabel}>Завершенных проектов</div>
+          <div
+            style={{ ...projectsStyles.statsGrid, border: "1px dashed indigo" }}
+          >
+            <div
+              style={{
+                ...projectsStyles.statCard,
+                border: "1px dashed violet",
+              }}
+            >
+              <div
+                style={{
+                  ...projectsStyles.statValue,
+                  border: "1px dashed coral",
+                }}
+              >
+                12+
+              </div>
+              <div
+                style={{
+                  ...projectsStyles.statLabel,
+                  border: "1px dashed gold",
+                }}
+              >
+                Завершенных проектов
+              </div>
             </div>
-            <div style={projectsStyles.statCard}>
-              <div style={projectsStyles.statValue}>8</div>
-              <div style={projectsStyles.statLabel}>Довольных клиентов</div>
+            <div
+              style={{
+                ...projectsStyles.statCard,
+                border: "1px dashed violet",
+              }}
+            >
+              <div
+                style={{
+                  ...projectsStyles.statValue,
+                  border: "1px dashed coral",
+                }}
+              >
+                8
+              </div>
+              <div
+                style={{
+                  ...projectsStyles.statLabel,
+                  border: "1px dashed gold",
+                }}
+              >
+                Довольных клиентов
+              </div>
             </div>
-            <div style={projectsStyles.statCard}>
-              <div style={projectsStyles.statValue}>3</div>
-              <div style={projectsStyles.statLabel}>Дизайн-системы</div>
+            <div
+              style={{
+                ...projectsStyles.statCard,
+                border: "1px dashed violet",
+              }}
+            >
+              <div
+                style={{
+                  ...projectsStyles.statValue,
+                  border: "1px dashed coral",
+                }}
+              >
+                3
+              </div>
+              <div
+                style={{
+                  ...projectsStyles.statLabel,
+                  border: "1px dashed gold",
+                }}
+              >
+                Дизайн-системы
+              </div>
             </div>
-            <div style={projectsStyles.statCard}>
-              <div style={projectsStyles.statValue}>100%</div>
-              <div style={projectsStyles.statLabel}>Успешная сдача</div>
+            <div
+              style={{
+                ...projectsStyles.statCard,
+                border: "1px dashed violet",
+              }}
+            >
+              <div
+                style={{
+                  ...projectsStyles.statValue,
+                  border: "1px dashed coral",
+                }}
+              >
+                100%
+              </div>
+              <div
+                style={{
+                  ...projectsStyles.statLabel,
+                  border: "1px dashed gold",
+                }}
+              >
+                Успешная сдача
+              </div>
             </div>
           </div>
         </div>
 
         {/* ПРАВАЯ ЧАСТЬ - sticky заголовок и описание */}
         <div style={projectsStyles.rightContainer}>
-          <div style={projectsStyles.rightStickyContent}>
-            <h2 style={projectsStyles.title}>Проекты</h2>
-            <p style={projectsStyles.rightContent}>
+          <div
+            style={{
+              ...projectsStyles.rightStickyContent,
+              border: "1px dashed chocolate",
+            }}
+          >
+            <h2
+              style={{ ...projectsStyles.title, border: "1px dashed salmon" }}
+            >
+              Проекты
+            </h2>
+            <p
+              style={{
+                ...projectsStyles.rightContent,
+                border: "1px dashed plum",
+              }}
+            >
               Реализованные проекты, демонстрирующие мой подход к созданию
               интерфейсов. Каждый проект — это решение конкретной бизнес-задачи
               через дизайн.

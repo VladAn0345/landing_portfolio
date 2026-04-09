@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import {
   headlineLarge,
-  headlineSmall,
+  headlineRegular,
   bodyLarge,
   bodyMedium,
 } from "../typography";
@@ -107,7 +107,7 @@ const styles = {
 
   subtitle: {
     color: "#1A2433",
-    ...headlineSmall,
+    ...headlineRegular,
     textAlign: "center" as const,
     margin: "0 0 24px 0",
     padding: "0",
