@@ -8,6 +8,7 @@ import {
   titleLarge,
   titleMedium,
   bodyLarge,
+  bodyMedium,
   bodySmall,
   caption,
 } from "../typography";
@@ -248,30 +249,70 @@ const aboutStyles = {
 
   skillIconsContainer: {
     display: "flex",
-    gap: "8px",
+    gap: "12px",
     marginBottom: "0",
     flexWrap: "wrap",
   } as React.CSSProperties,
 
   skillIcon: {
-    width: "32px",
-    height: "32px",
+    width: "40px",
+    height: "40px",
     objectFit: "contain" as const,
   } as React.CSSProperties,
 
   skillIconPlaceholder: {
-    width: "32px",
-    height: "32px",
+    width: "40px",
+    height: "40px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "6px",
     backgroundColor: "#FFFFFF",
     color: "#1A2433",
+    ...bodyMedium,
+  } as React.CSSProperties,
+
+  skillIconContainer: {
+    position: "relative" as const,
+    display: "inline-block",
+  } as React.CSSProperties,
+
+  skillIconTooltip: {
+    position: "absolute" as const,
+    bottom: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    backgroundColor: "#1A2433",
+    color: "#FFFFFF",
+    padding: "6px 12px",
+    borderRadius: "6px",
     fontSize: "12px",
-    fontWeight: "600",
-    filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))",
-    border: "1px solid #E8EAED",
+    lineHeight: "16px",
+    fontWeight: 500,
+    whiteSpace: "nowrap" as const,
+    opacity: 0,
+    visibility: "hidden" as const,
+    transition: "opacity 0.2s ease, visibility 0.2s ease",
+    zIndex: 100,
+    marginBottom: "8px",
+    pointerEvents: "none" as const,
+  } as React.CSSProperties,
+
+  skillIconTooltipVisible: {
+    opacity: 1,
+    visibility: "visible" as const,
+  } as React.CSSProperties,
+
+  skillIconTooltipArrow: {
+    position: "absolute" as const,
+    top: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: 0,
+    height: 0,
+    borderLeft: "6px solid transparent",
+    borderRight: "6px solid transparent",
+    borderTop: "6px solid #1A2433",
   } as React.CSSProperties,
 
   skillContent: {
@@ -289,6 +330,67 @@ const aboutStyles = {
     ...bodyLarge,
     margin: "8px 0 0 0",
   } as React.CSSProperties,
+};
+
+// Компонент иконки с tooltip
+interface SkillIconWithTooltipProps {
+  src: string;
+  alt: string;
+  tooltipText: string;
+}
+
+const SkillIconWithTooltip: React.FC<SkillIconWithTooltipProps> = ({
+  src,
+  alt,
+  tooltipText,
+}) => {
+  const [isTooltipVisible, setIsTooltipVisible] = React.useState(false);
+
+  const handleMouseEnter = () => {
+    setIsTooltipVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsTooltipVisible(false);
+  };
+
+  // Определяем, нужно ли добавлять тень и скругление
+  // (для иконок ИИ-инструментов, Figma, Miro, Trello, Jira)
+  const shouldAddShadow =
+    src.includes("gpt.svg") ||
+    src.includes("deepseek.svg") ||
+    src.includes("grok.svg") ||
+    src.includes("figma.svg") ||
+    src.includes("miro.svg") ||
+    src.includes("trello.svg") ||
+    src.includes("jira.svg");
+
+  const iconStyle = shouldAddShadow
+    ? {
+        ...aboutStyles.skillIcon,
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        borderRadius: "8px",
+      }
+    : aboutStyles.skillIcon;
+
+  return (
+    <div
+      style={aboutStyles.skillIconContainer}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img src={src} alt={alt} style={iconStyle} />
+      <div
+        style={{
+          ...aboutStyles.skillIconTooltip,
+          ...(isTooltipVisible ? aboutStyles.skillIconTooltipVisible : {}),
+        }}
+      >
+        {tooltipText}
+        <div style={aboutStyles.skillIconTooltipArrow}></div>
+      </div>
+    </div>
+  );
 };
 
 export default function About() {
@@ -429,78 +531,83 @@ export default function About() {
                   <h4 style={aboutStyles.skillTitle}>
                     Дизайн и прототипирование
                   </h4>
-                  <div style={aboutStyles.skillIconsContainer}></div>
-                  <p style={aboutStyles.skillDescription}>
-                    Figma, FigJam, Miro, интерактивные прототипы
-                  </p>
+                  <div style={aboutStyles.skillIconsContainer}>
+                    <SkillIconWithTooltip
+                      src="/images/figma.svg"
+                      alt="Figma"
+                      tooltipText="Figma"
+                    />
+                    <SkillIconWithTooltip
+                      src="/images/miro.svg"
+                      alt="Miro"
+                      tooltipText="Miro"
+                    />
+                  </div>
                 </div>
                 <div style={aboutStyles.skillCard}>
                   <h4 style={aboutStyles.skillTitle}>Коммуникация и задачи</h4>
-                  <div style={aboutStyles.skillIconsContainer}></div>
-                  <p style={aboutStyles.skillDescription}>
-                    Trello, Jira, постановка задач разработчикам
-                  </p>
+                  <div style={aboutStyles.skillIconsContainer}>
+                    <SkillIconWithTooltip
+                      src="/images/trello.svg"
+                      alt="Trello"
+                      tooltipText="Trello"
+                    />
+                    <SkillIconWithTooltip
+                      src="/images/jira.svg"
+                      alt="Jira"
+                      tooltipText="Jira"
+                    />
+                  </div>
                 </div>
                 <div style={aboutStyles.skillCard}>
                   <h4 style={aboutStyles.skillTitle}>Работа с версткой</h4>
                   <div style={aboutStyles.skillIconsContainer}>
-                    <img
+                    <SkillIconWithTooltip
                       src="/images/vscode.svg"
                       alt="VS Code"
-                      style={aboutStyles.skillIcon}
+                      tooltipText="VS Code"
                     />
-                    <img
+                    <SkillIconWithTooltip
                       src="/images/zed.svg"
                       alt="Zed"
-                      style={aboutStyles.skillIcon}
+                      tooltipText="Zed"
                     />
                   </div>
-                  <p style={aboutStyles.skillDescription}></p>
                 </div>
                 <div style={aboutStyles.skillCard}>
                   <h4 style={aboutStyles.skillTitle}>ИИ-инструменты</h4>
                   <div style={aboutStyles.skillIconsContainer}>
-                    <img
-                      src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg"
+                    <SkillIconWithTooltip
+                      src="/images/gpt.svg"
                       alt="ChatGPT"
-                      style={aboutStyles.skillIcon}
+                      tooltipText="ChatGPT"
                     />
-                    <img
+                    <SkillIconWithTooltip
                       src="/images/deepseek.svg"
                       alt="DeepSeek"
-                      style={{
-                        ...aboutStyles.skillIcon,
-                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                        borderRadius: "8px",
-                      }}
+                      tooltipText="DeepSeek"
                     />
-                    <img
+                    <SkillIconWithTooltip
                       src="/images/grok.svg"
                       alt="Grok"
-                      style={{
-                        ...aboutStyles.skillIcon,
-                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                        borderRadius: "8px",
-                      }}
+                      tooltipText="Grok"
                     />
                   </div>
-                  <p style={aboutStyles.skillDescription}></p>
                 </div>
                 <div style={aboutStyles.skillCard}>
                   <h4 style={aboutStyles.skillTitle}>Графические редакторы</h4>
                   <div style={aboutStyles.skillIconsContainer}>
-                    <img
+                    <SkillIconWithTooltip
                       src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg"
                       alt="Photoshop"
-                      style={aboutStyles.skillIcon}
+                      tooltipText="Photoshop"
                     />
-                    <img
+                    <SkillIconWithTooltip
                       src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg"
                       alt="Illustrator"
-                      style={aboutStyles.skillIcon}
+                      tooltipText="Illustrator"
                     />
                   </div>
-                  <p style={aboutStyles.skillDescription}></p>
                 </div>
               </div>
             </div>
