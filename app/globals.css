@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-rgb: 252, 252, 252;
+
+    /* СИСТЕМА ШРИФТОВ - CSS ПЕРЕМЕННЫЕ */
+
+    /* DISPLAY LEVELS */
+    --display-large-font-size: 64px;
+    --display-large-line-height: 72px;
+    --display-large-letter-spacing: -1.2%;
+    --display-large-font-weight: 900;
+
+    --display-medium-font-size: 48px;
+    --display-medium-line-height: 56px;
+    --display-medium-letter-spacing: -1%;
+    --display-medium-font-weight: 900;
+
+    /* HEADLINE LEVELS */
+    --headline-large-font-size: 40px;
+    --headline-large-line-height: 48px;
+    --headline-large-letter-spacing: -0.8%;
+    --headline-large-font-weight: 900;
+
+    --headline-medium-font-size: 32px;
+    --headline-medium-line-height: 40px;
+    --headline-medium-letter-spacing: -0.6%;
+    --headline-medium-font-weight: 700;
+
+    --headline-small-font-size: 20px;
+    --headline-small-line-height: 28px;
+    --headline-small-letter-spacing: -0.2%;
+    --headline-small-font-weight: 500;
+
+    /* TITLE LEVELS */
+    --title-large-font-size: 18px;
+    --title-large-line-height: 26px;
+    --title-large-letter-spacing: 0%;
+    --title-large-font-weight: 600;
+
+    --title-medium-font-size: 16px;
+    --title-medium-line-height: 24px;
+    --title-medium-letter-spacing: 0%;
+    --title-medium-font-weight: 600;
+
+    /* BODY LEVELS */
+    --body-large-font-size: 16px;
+    --body-large-line-height: 24px;
+    --body-large-letter-spacing: 0%;
+    --body-large-font-weight: 500;
+
+    --body-medium-font-size: 16px;
+    --body-medium-line-height: 24px;
+    --body-medium-letter-spacing: 0%;
+    --body-medium-font-weight: 500;
+
+    --body-small-font-size: 14px;
+    --body-small-line-height: 20px;
+    --body-small-letter-spacing: 0.1%;
+    --body-small-font-weight: 400;
+
+    /* CAPTION & OVERLINE */
+    --caption-font-size: 12px;
+    --caption-line-height: 16px;
+    --caption-letter-spacing: 0.2%;
+    --caption-font-weight: 400;
+
+    --overline-font-size: 10px;
+    --overline-line-height: 14px;
+    --overline-letter-spacing: 0.5%;
+    --overline-font-weight: 500;
+
+    /* Базовые значения */
+    --font-family: "Inter, sans-serif";
+    --base-font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-rgb: 252, 252, 252;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    display: block;
+    min-height: 100vh;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background-color: rgb(var(--background-rgb));
+    background-color: #fcfcfc;
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
+}
+
+/* Кастомный скроллбар будет добавлен в компонентах */
