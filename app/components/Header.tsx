@@ -30,8 +30,21 @@ const headerStyles = {
     height: "100%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    padding: "0",
+    justifyContent: "center",
+    padding: "0 24px",
+    position: "relative" as const,
+  } as React.CSSProperties,
+
+  logoContainer: {
+    position: "absolute" as const,
+    left: "0",
+    top: "50%",
+    transform: "translateY(-50%)",
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+    height: "32px",
+    zIndex: 1,
   } as React.CSSProperties,
 
   logo: {
@@ -41,8 +54,16 @@ const headerStyles = {
     fontWeight: "600",
     color: "#1A2433",
     cursor: "pointer",
-    transition: "opacity 0.3s ease",
     userSelect: "none",
+    display: "flex",
+    backgroundColor: "#FCFCFC",
+    padding: "0 8px",
+    borderRadius: "4px",
+  } as React.CSSProperties,
+
+  logoLetter: {
+    display: "inline-block",
+    transition: "all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
   } as React.CSSProperties,
 
   navContainer: {
@@ -50,7 +71,6 @@ const headerStyles = {
     alignItems: "center",
     justifyContent: "center",
     gap: "8px",
-    flex: 1,
   } as React.CSSProperties,
 
   navButton: {
@@ -86,7 +106,50 @@ const headerStyles = {
 export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const [lettersVisibility, setLettersVisibility] = useState<boolean[]>([]);
   const isScrollingByClickRef = useRef(false);
+
+  // Текст логотипа
+  const initialLogo = "ява.";
+  const expandedLogo = "явладиславанищенко.";
+  const initialLetters = Array.from(initialLogo);
+  const expandedLetters = Array.from(expandedLogo);
+
+  // Создаем массив букв для отображения
+  // В начальном состоянии: буквы из initialLogo на позициях 0-3
+  // В expanded состоянии: буквы из expandedLogo на всех позициях
+  const getDisplayLetter = (index: number, isHovered: boolean) => {
+    // Особый случай: буква "а" на позиции 2
+    // В initialLogo это "а" (индекс 2), в expandedLogo это "л" (индекс 2)
+    if (index === 2) {
+      if (!isHovered) {
+        // В начальном состоянии показываем "а"
+        return "а";
+      } else {
+        // При наведении показываем "л" из expandedLogo
+        return expandedLetters[index];
+      }
+    }
+
+    if (!isHovered && index < initialLetters.length) {
+      // В начальном состоянии используем буквы из initialLogo
+      return initialLetters[index];
+    }
+    // В остальных случаях используем буквы из expandedLogo
+    return expandedLetters[index];
+  };
+
+  // Инициализируем видимость букв
+  useEffect(() => {
+    const initialVisibility = expandedLetters.map(
+      (_, index) => index < initialLetters.length,
+    );
+    setLettersVisibility(initialVisibility);
+  }, []);
+
+  // Состояние для анимации
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const navItems = [
     { id: "about", label: "Обо мне" },
@@ -231,20 +294,126 @@ export default function Header() {
     window.location.reload();
   };
 
+  const handleLogoMouseEnter = () => {
+    if (isAnimating) return;
+    setIsLogoHovered(true);
+    setIsAnimating(true);
+
+    // Простая последовательная анимация
+    // 1. Буквы "ява." уже видны
+    // 2. Буквы "ладислав" появляются по очереди (индексы 2-9 в expandedLetters)
+    // 3. Буквы "анищенко." появляются по очереди (индексы 10-18 в expandedLetters)
+
+    // Буквы "ладислав" (индексы 2-9)
+    for (let i = 2; i <= 9; i++) {
+      setTimeout(
+        () => {
+          setLettersVisibility((prev) => {
+            const newVisibility = [...prev];
+            newVisibility[i] = true;
+            return newVisibility;
+          });
+        },
+        (i - 2) * 80,
+      );
+    }
+
+    // Буквы "анищенко." (индексы 10-18)
+    for (let i = 10; i <= 18; i++) {
+      setTimeout(
+        () => {
+          setLettersVisibility((prev) => {
+            const newVisibility = [...prev];
+            newVisibility[i] = true;
+            return newVisibility;
+          });
+        },
+        (i - 10) * 80 + 640,
+      ); // Начинаем после "ладислав"
+    }
+
+    // Завершаем анимацию
+    setTimeout(() => setIsAnimating(false), 1500);
+  };
+
+  const handleLogoMouseLeave = () => {
+    if (isAnimating) return;
+    setIsLogoHovered(false);
+    setIsAnimating(true);
+
+    // Обратная анимация в обратном порядке
+    // 1. Буквы "анищенко." исчезают первыми (индексы 18-10)
+    // 2. Буквы "ладислав" исчезают после (индексы 9-2)
+
+    // Буквы "анищенко." (индексы 18-10 в обратном порядке)
+    for (let i = 18; i >= 10; i--) {
+      setTimeout(
+        () => {
+          setLettersVisibility((prev) => {
+            const newVisibility = [...prev];
+            newVisibility[i] = false;
+            return newVisibility;
+          });
+        },
+        (18 - i) * 60,
+      );
+    }
+
+    // Буквы "ладислав" (индексы 9-3 в обратном порядке, индекс 2 - это "а" из initialLogo)
+    for (let i = 9; i >= 3; i--) {
+      setTimeout(
+        () => {
+          setLettersVisibility((prev) => {
+            const newVisibility = [...prev];
+            newVisibility[i] = false;
+            return newVisibility;
+          });
+        },
+        (9 - i) * 60 + 540,
+      ); // Начинаем после "анищенко."
+    }
+
+    // Завершаем анимацию
+    setTimeout(() => setIsAnimating(false), 1200);
+  };
+
   return (
     <header style={headerStyle} id="main-header">
       <div style={headerStyles.container}>
         <div
-          style={headerStyles.logo}
+          style={headerStyles.logoContainer}
           onClick={handleLogoClick}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = "0.7";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = "1";
-          }}
+          onMouseEnter={handleLogoMouseEnter}
+          onMouseLeave={handleLogoMouseLeave}
         >
-          ява.
+          <div style={headerStyles.logo}>
+            {expandedLetters.map((_, index) => {
+              const isInitialLetter = index < initialLetters.length;
+
+              // Определяем какую букву показывать
+              const displayLetter = getDisplayLetter(index, isLogoHovered);
+
+              // Используем состояние видимости для каждой буквы
+              const isVisible =
+                lettersVisibility[index] !== undefined
+                  ? lettersVisibility[index]
+                  : isInitialLetter;
+
+              const letterStyle = {
+                ...headerStyles.logoLetter,
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateX(0)" : "translateX(-100%)",
+                width: isVisible ? "auto" : "0",
+                overflow: "hidden",
+              };
+
+              return (
+                <span key={index} style={letterStyle}>
+                  {displayLetter}
+                </span>
+              );
+            })}
+          </div>
         </div>
         <div style={headerStyles.navContainer}>
           {navItems.map((item) => (
@@ -254,17 +423,18 @@ export default function Header() {
               style={getButtonStyle(item.id)}
               onMouseEnter={(e) => {
                 if (activeSection !== item.id) {
-                  e.currentTarget.style.color =
-                    headerStyles.navButtonHover.color;
-                  e.currentTarget.style.backgroundColor =
-                    headerStyles.navButtonHover.backgroundColor;
+                  e.currentTarget.style.color = headerStyles.navButtonHover
+                    .color as string;
+                  e.currentTarget.style.backgroundColor = headerStyles
+                    .navButtonHover.backgroundColor as string;
                 }
               }}
               onMouseLeave={(e) => {
                 if (activeSection !== item.id) {
-                  e.currentTarget.style.color = headerStyles.navButton.color;
-                  e.currentTarget.style.backgroundColor =
-                    headerStyles.navButton.backgroundColor;
+                  e.currentTarget.style.color = headerStyles.navButton
+                    .color as string;
+                  e.currentTarget.style.backgroundColor = headerStyles.navButton
+                    .backgroundColor as string;
                 }
               }}
             >
@@ -272,7 +442,6 @@ export default function Header() {
             </button>
           ))}
         </div>
-        <div style={{ width: "60px" }}></div> {/* Пустой элемент для баланса */}
       </div>
     </header>
   );
